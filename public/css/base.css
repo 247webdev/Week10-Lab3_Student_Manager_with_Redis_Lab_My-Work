@@ -1,0 +1,35 @@
+body {
+  background-color: #41A151;
+}
+
+li {
+  list-style: none;
+  text-align: left;
+}
+
+.alignLeft {
+  text-align: left;
+}
+
+.studentName {
+  font-size: 140%;
+}
+
+.inline {
+  display: inline;
+}
+
+.moveUp1x {
+  position: relative;
+  top: -5px;
+}
+
+.moveLeft1x {
+  position: relative;
+  left: -5px;
+}
+
+.moveLeft2x {
+  position: relative;
+  left: -10px;
+}

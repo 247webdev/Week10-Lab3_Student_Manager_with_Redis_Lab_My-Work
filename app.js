@@ -15,14 +15,41 @@ app.use(express.static(__dirname + '/public'));
 
 // root route
 app.get('/', function(req, res){
-  res.render("index");
+  client.LRANGE("students", 0, -1, function(err, students){
+    res.render("index", {students: students});
+  });
+});
+
+// post route
+app.post("/add", function(req, res){
+console.log("Called add", req.body.student);
+  client.LPUSH("students", req.body.student);
+  res.redirect("/");
 });
 
 // delete an individual item route
 app.delete('/remove/:student', function(req, res){
-  console.log("Called remove", req.params.student);
-  client.LRANGE("students", 0, -1, function(err, todos){
-    lkjlkjlkjlkj
+  // students = [];
+console.log("Called remove", req.params.students);
+  client.LRANGE("students", 0, -1, function(err, students){
+    students.forEach(function(student){
+      if(student === req.params.student){
+        // lkjlkjlkjlkj
+        client.LREM("students", 1, student);
+        res.redirect("/");
+      }
+    });
+  });
+});
+
+// delete an individual item route
+app.delete('/allDelete', function(req, res){
+console.log("Called delete ALL");
+  client.LRANGE("students", 0, -1, function(err, students){
+    students.forEach(function(student){
+      client.LREM("students", 1, student);
+    });
+    res.redirect("/");
   });
 });
 
@@ -30,3 +57,17 @@ app.delete('/remove/:student', function(req, res){
 app.listen(3000, function(){
   console.log("Sever starting on port 3000");
 });
+
+
+// App should:
+// DONE Student just have a name 
+// DONE list students
+// DONE create ...
+// DONE delete one ...
+// delete all ...
+
+// ### Bonus
+// Edit students
+
+// ### Super-Bonus
+// SPA (single page application) using AJAX
