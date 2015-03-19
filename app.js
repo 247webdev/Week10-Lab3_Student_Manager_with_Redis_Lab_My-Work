@@ -23,8 +23,12 @@ app.get('/', function(req, res){
 // post route
 app.post("/add", function(req, res){
 console.log("Called add", req.body.student);
-  client.LPUSH("students", req.body.student);
-  res.redirect("/");
+  if(req.body.student != nil and req.body.student != ""){
+    client.LPUSH("students", req.body.student);
+    res.redirect("/");
+  } else {
+    
+  }
 });
 
 // delete an individual item route
